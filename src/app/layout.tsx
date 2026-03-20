@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { GeistSans } from "geist/font/sans";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Geist } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const satoshi = localFont({
   src: [
@@ -30,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${satoshi.variable} ${GeistSans.variable} ${jetbrainsMono.variable} dark`}>
+    <html lang="en" className={cn("dark", satoshi.variable, GeistSans.variable, jetbrainsMono.variable, "font-sans", geist.variable)}>
       <body className="bg-[#0C0C0E] text-[#EDEDEF] antialiased">
         {children}
       </body>
