@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { JetBrains_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -35,7 +36,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("dark", satoshi.variable, GeistSans.variable, jetbrainsMono.variable, "font-sans", geist.variable)}>
       <body className="bg-[#0C0C0E] text-[#EDEDEF] antialiased">
-        {children}
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );
