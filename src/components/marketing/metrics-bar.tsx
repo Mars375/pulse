@@ -1,72 +1,56 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { cn } from "@/lib/utils";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-function easeOutExpo(t: number): number {
-  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-interface AnimatedCounterProps {
+interface CounterProps {
   end: number;
   prefix?: string;
   suffix?: string;
   decimals?: number;
-  duration?: number;
-  started: boolean;
 }
 
-function AnimatedCounter({
-  end,
-  prefix = "",
-  suffix = "",
-  decimals = 0,
-  duration = 2000,
-  started,
-}: AnimatedCounterProps) {
-  const [display, setDisplay] = useState("0");
-  const rafRef = useRef<number>(0);
-
-  const animate = useCallback(() => {
-    const startTime = performance.now();
-
-    function tick(now: number) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutExpo(progress);
-      const current = eased * end;
-
-      if (decimals > 0) {
-        setDisplay(current.toFixed(decimals));
-      } else {
-        setDisplay(Math.round(current).toLocaleString("en-US"));
-      }
-
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(tick);
-      }
-    }
-
-    rafRef.current = requestAnimationFrame(tick);
-  }, [end, decimals, duration]);
+function AnimatedCounter({ end, prefix = "", suffix = "", decimals = 0 }: CounterProps) {
+  const [display, setDisplay] = useState(`${prefix}0${suffix}`);
+  const ref = useRef<HTMLSpanElement>(null);
+  const triggered = useRef(false);
 
   useEffect(() => {
-    if (started) {
-      animate();
-    }
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [started, animate]);
+    const el = ref.current;
+    if (!el) return;
 
-  return (
-    <span>
-      {prefix}
-      {display}
-      {suffix}
-    </span>
-  );
+    const proxy = { value: 0 };
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top 90%",
+      onEnter: () => {
+        if (triggered.current) return;
+        triggered.current = true;
+
+        gsap.to(proxy, {
+          value: end,
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: () => {
+            const v = decimals > 0
+              ? proxy.value.toFixed(decimals)
+              : Math.round(proxy.value).toLocaleString("en-US");
+            setDisplay(`${prefix}${v}${suffix}`);
+          },
+        });
+      },
+    });
+
+    return () => st.kill();
+  }, [end, prefix, suffix, decimals]);
+
+  return <span ref={ref}>{display}</span>;
 }
 
 const METRICS = [
@@ -76,21 +60,44 @@ const METRICS = [
 ] as const;
 
 export function MetricsBar() {
-  const { ref, isVisible } = useScrollAnimation(0.2);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    gsap.set(el, { opacity: 0, y: 20 });
+
+    const tween = gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 90%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    };
+  }, []);
 
   return (
-    <section ref={ref} className="bg-bg-surface-1 py-16">
+    <section ref={sectionRef} className="bg-bg-surface-1 py-16">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-3 text-center">
           {METRICS.map((metric) => (
             <div key={metric.label}>
-              <div className="font-mono text-5xl font-bold text-text-primary">
+              <div className="font-mono text-5xl font-bold text-text-primary tabular-nums">
                 <AnimatedCounter
                   end={metric.end}
                   prefix={metric.prefix}
                   suffix={metric.suffix}
                   decimals={metric.decimals}
-                  started={isVisible}
                 />
               </div>
               <p className="mt-2 text-sm text-text-secondary">{metric.label}</p>

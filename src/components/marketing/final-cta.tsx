@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useScrollReveal } from "@/hooks/use-scroll-animation";
 
 export function FinalCta() {
+  const ref = useScrollReveal({ y: 30, duration: 0.8 });
+
   return (
     <section
       className="relative py-32 overflow-hidden"
@@ -10,7 +15,7 @@ export function FinalCta() {
           "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(99,102,241,0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 30% 60%, rgba(139,92,246,0.06) 0%, transparent 60%)",
       }}
     >
-      <div className="mx-auto max-w-3xl px-6 text-center">
+      <div ref={ref} className="mx-auto max-w-3xl px-6 text-center">
         <h2 className="font-satoshi text-4xl font-bold text-text-primary sm:text-5xl">
           Know your numbers.
         </h2>

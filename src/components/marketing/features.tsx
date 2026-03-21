@@ -1,7 +1,14 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollReveal } from "@/hooks/use-scroll-animation";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ---------- Mini chart visuals ---------- */
 
@@ -27,7 +34,6 @@ function MiniAreaChart() {
 }
 
 function MiniHeatmap() {
-  const rows = 4;
   const cols = 8;
   const opacities = [
     [90, 80, 70, 60, 50, 40, 35, 30],
@@ -41,12 +47,12 @@ function MiniHeatmap() {
         Cohort Retention
       </div>
       <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
-        {Array.from({ length: rows }).map((_, r) =>
-          Array.from({ length: cols }).map((_, c) => (
+        {opacities.flatMap((row, r) =>
+          row.map((val, c) => (
             <div
               key={`${r}-${c}`}
               className="aspect-square rounded-sm bg-chart-2"
-              style={{ opacity: (opacities[r][c] / 100) }}
+              style={{ opacity: val / 100 }}
             />
           ))
         )}
@@ -145,7 +151,7 @@ const FEATURES = [
   },
 ] as const;
 
-/* ---------- Feature row ---------- */
+/* ---------- Feature row with GSAP ---------- */
 
 function FeatureRow({
   title,
@@ -160,30 +166,67 @@ function FeatureRow({
   reversed: boolean;
   index: number;
 }) {
-  const { ref, isVisible } = useScrollAnimation(0.15);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const textEl = el.querySelector("[data-feature-text]");
+    const visualEl = el.querySelector("[data-feature-visual]");
+    if (!textEl || !visualEl) return;
+
+    gsap.set([textEl, visualEl], { y: 40, opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    tl.to(textEl, {
+      y: 0,
+      opacity: 1,
+      duration: 0.7,
+      ease: "power3.out",
+    }).to(
+      visualEl,
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        ease: "power3.out",
+      },
+      "-=0.5"
+    );
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, []);
 
   return (
     <div
-      ref={ref}
+      ref={containerRef}
       className={cn(
-        "flex flex-col items-center gap-10 md:gap-16 transition-all duration-600 ease-out",
-        reversed ? "md:flex-row-reverse" : "md:flex-row",
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        "flex flex-col items-center gap-10 md:gap-16",
+        reversed ? "md:flex-row-reverse" : "md:flex-row"
       )}
-      style={{ transitionDelay: `${index * 100}ms` }}
     >
       {/* Text */}
-      <div className="flex-1 text-center md:text-left">
+      <div data-feature-text className="flex-1 text-center md:text-left">
         <h3 className="font-satoshi text-2xl font-bold text-text-primary sm:text-3xl">
           {title}
         </h3>
-        <p className="mt-3 text-text-secondary max-w-md">
-          {description}
-        </p>
+        <p className="mt-3 text-text-secondary max-w-md">{description}</p>
       </div>
 
       {/* Visual */}
       <div
+        data-feature-visual
         className={cn(
           "flex-1 w-full max-w-sm transition-transform duration-300",
           reversed ? "rotate-1 hover:rotate-0" : "-rotate-1 hover:rotate-0"
@@ -198,10 +241,12 @@ function FeatureRow({
 /* ---------- Features section ---------- */
 
 export function Features() {
+  const headingRef = useScrollReveal({ y: 30, duration: 0.6 });
+
   return (
     <section id="features" className="py-24">
       <div className="mx-auto max-w-5xl px-6 space-y-24">
-        <div className="text-center">
+        <div ref={headingRef} className="text-center">
           <h2 className="font-satoshi text-3xl font-bold text-text-primary sm:text-4xl">
             Everything you need to grow
           </h2>

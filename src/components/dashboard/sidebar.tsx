@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
   TrendingUp,
@@ -16,7 +16,7 @@ import {
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
-const navItems = [
+export const navItems = [
   { icon: LayoutDashboard, label: "Overview", href: "/overview" },
   { icon: TrendingUp, label: "Revenue", href: "/revenue" },
   { icon: Users, label: "Customers", href: "/customers" },
@@ -39,23 +39,27 @@ export function Sidebar() {
       animate={collapsed ? "collapsed" : "expanded"}
       variants={sidebarVariants}
       transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-      className="relative flex h-screen flex-col border-r border-border-default bg-bg-surface-1"
+      className="relative hidden h-screen flex-col border-r border-border-default bg-bg-surface-1 md:flex"
     >
       {/* Logo */}
       <div className="flex h-16 items-center px-4">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent-primary font-satoshi text-lg font-bold text-white">
           P
         </div>
-        {!collapsed && (
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="ml-3 font-satoshi text-lg font-bold text-text-primary"
-          >
-            Pulse
-          </motion.span>
-        )}
+        <AnimatePresence>
+          {!collapsed && (
+            <motion.span
+              key="sidebar-logo-label"
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: "auto" }}
+              exit={{ opacity: 0, width: 0 }}
+              transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="ml-3 overflow-hidden whitespace-nowrap font-satoshi text-lg font-bold text-text-primary"
+            >
+              Pulse
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Navigation */}
@@ -86,16 +90,20 @@ export function Sidebar() {
                   isActive ? "text-accent-primary" : "text-text-secondary group-hover:text-text-primary"
                 )}
               />
-              {!collapsed && (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="relative z-10"
-                >
-                  {item.label}
-                </motion.span>
-              )}
+              <AnimatePresence>
+                {!collapsed && (
+                  <motion.span
+                    key="sidebar-nav-label"
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: "auto" }}
+                    exit={{ opacity: 0, width: 0 }}
+                    transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative z-10 overflow-hidden whitespace-nowrap"
+                  >
+                    {item.label}
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </Link>
           );
         })}

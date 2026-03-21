@@ -7,7 +7,7 @@
 @theme inline {
   /* Fonts */
   --font-satoshi: var(--font-satoshi), sans-serif;
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
 
   /* Background colors */
@@ -22,7 +22,7 @@
   /* Text colors */
   --color-text-primary: #EDEDEF;
   --color-text-secondary: #7E7E86;
-  --color-text-tertiary: #52525A;
+  --color-text-tertiary: #71717A;
 
   /* Accent colors */
   --color-accent-primary: #6366F1;
@@ -91,7 +91,7 @@
     /* Text */
     --text-primary: #EDEDEF;
     --text-secondary: #7E7E86;
-    --text-tertiary: #52525A;
+    --text-tertiary: #71717A;
 
     /* Accent — Indigo */
     --accent-primary: #6366F1;
@@ -115,18 +115,12 @@
   }
 
   * {
-    border-color: var(--border-default);
     @apply border-border outline-ring/50;
   }
 
   body {
-    background: var(--bg-primary);
-    color: var(--text-primary);
     font-feature-settings: "rlig" 1, "calt" 1;
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+    @apply bg-background text-foreground font-sans;
   }
 }
 
