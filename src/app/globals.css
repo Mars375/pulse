@@ -146,6 +146,22 @@
   animation: heartbeat 2s ease-in-out infinite;
 }
 
+/* Float animation for hero badges */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@utility animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
 /* shadcn/ui semantic tokens — mapped to Pulse dark design system */
 :root {
   --background: #0C0C0E;
