@@ -130,6 +130,22 @@
   }
 }
 
+/* Heartbeat pulse animation for the logo dot */
+@keyframes heartbeat {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.3);
+  }
+}
+
+@utility animate-heartbeat {
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
 /* shadcn/ui semantic tokens — mapped to Pulse dark design system */
 :root {
   --background: #0C0C0E;

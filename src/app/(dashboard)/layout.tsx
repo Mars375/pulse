@@ -1,5 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { Sidebar } from "@/components/dashboard/sidebar";
+import { Topbar } from "@/components/dashboard/topbar";
+import { PageTransition } from "@/components/dashboard/page-transition";
 
 export default async function DashboardLayout({
   children,
@@ -9,7 +12,15 @@ export default async function DashboardLayout({
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  // Will add full layout (sidebar, topbar) in Task 11
-  // Redirect logic (onboarding vs dashboard) is handled per-page
-  return <>{children}</>;
+  return (
+    <div className="flex h-screen bg-bg-primary">
+      <Sidebar />
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <Topbar />
+        <main className="flex-1 overflow-y-auto p-6">
+          <PageTransition>{children}</PageTransition>
+        </main>
+      </div>
+    </div>
+  );
 }

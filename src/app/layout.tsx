@@ -24,8 +24,18 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pulse",
-  description: "SaaS Metrics Dashboard",
+  title: {
+    default: "Pulse — SaaS Metrics Dashboard",
+    template: "%s | Pulse",
+  },
+  description:
+    "Real-time SaaS metrics. MRR, churn, cohorts — one dashboard for everything that matters.",
+  openGraph: {
+    title: "Pulse — SaaS Metrics Dashboard",
+    description:
+      "Real-time SaaS metrics. MRR, churn, cohorts — one dashboard for everything that matters.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
