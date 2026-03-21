@@ -84,45 +84,49 @@ export function PricingCards() {
           </p>
 
           {/* Toggle */}
-          <div className="mt-8 flex items-center justify-center gap-3">
-            <span
-              className={cn(
-                "text-sm transition-colors",
-                !annual ? "text-text-primary" : "text-text-tertiary"
-              )}
-            >
-              Monthly
-            </span>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={annual}
-              onClick={() => setAnnual((prev) => !prev)}
-              className={cn(
-                "relative h-6 w-11 rounded-full transition-colors",
-                annual ? "bg-accent-primary" : "bg-bg-surface-2"
-              )}
-            >
+          <div className="mt-8 flex flex-col items-center gap-2">
+            <div className="flex items-center gap-3">
               <span
                 className={cn(
-                  "absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform",
-                  annual ? "translate-x-5" : "translate-x-0"
+                  "text-sm transition-colors",
+                  !annual ? "text-text-primary" : "text-text-tertiary"
                 )}
-              />
-            </button>
-            <span
-              className={cn(
-                "text-sm transition-colors",
-                annual ? "text-text-primary" : "text-text-tertiary"
-              )}
-            >
-              Annual
-            </span>
-            {annual && (
-              <span className="ml-2 rounded-full bg-accent-glow px-2.5 py-0.5 text-xs font-medium text-accent-primary">
-                Save 17%
+              >
+                Monthly
               </span>
-            )}
+              <button
+                type="button"
+                role="switch"
+                aria-checked={annual}
+                onClick={() => setAnnual((prev) => !prev)}
+                className={cn(
+                  "relative h-6 w-11 rounded-full transition-colors",
+                  annual ? "bg-accent-primary" : "bg-bg-surface-2"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform",
+                    annual ? "translate-x-5" : "translate-x-0"
+                  )}
+                />
+              </button>
+              <span
+                className={cn(
+                  "text-sm transition-colors",
+                  annual ? "text-text-primary" : "text-text-tertiary"
+                )}
+              >
+                Annual
+              </span>
+            </div>
+            <div className="h-6 flex items-center">
+              {annual && (
+                <span className="rounded-full bg-accent-glow px-2.5 py-0.5 text-xs font-medium text-accent-primary">
+                  Save 17%
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
