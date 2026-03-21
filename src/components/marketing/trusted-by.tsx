@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/hooks/use-scroll-animation";
 
 const LOGOS = [
   { name: "ACME", mrr: "$12K MRR" },
@@ -15,9 +16,10 @@ const LOGOS = [
 
 export function TrustedBy() {
   const doubled = [...LOGOS, ...LOGOS];
+  const ref = useScrollReveal({ y: 20, duration: 0.6 });
 
   return (
-    <section className="border-y border-white/5 py-10 overflow-hidden bg-bg-surface-1/30">
+    <section ref={ref} className="border-y border-white/5 py-10 overflow-hidden bg-bg-surface-1/30">
       <p className="mb-8 text-center text-[11px] uppercase tracking-[0.2em] text-text-tertiary">
         Trusted by fast-growing SaaS teams
       </p>
@@ -40,7 +42,7 @@ export function TrustedBy() {
               <span className="font-mono text-[10px] text-text-tertiary/50 tabular-nums">
                 {logo.mrr}
               </span>
-              <span className="text-text-tertiary/20">·</span>
+              <span className="text-text-tertiary/20">&middot;</span>
             </div>
           ))}
         </div>

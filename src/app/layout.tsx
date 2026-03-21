@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { GeistSans } from "geist/font/sans";
-import { JetBrains_Mono, Geist } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const satoshi = localFont({
   src: [
@@ -14,12 +12,6 @@ const satoshi = localFont({
     { path: "../../public/fonts/Satoshi-VariableItalic.woff2", style: "italic" },
   ],
   variable: "--font-satoshi",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
   display: "swap",
 });
 
@@ -44,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("dark", satoshi.variable, GeistSans.variable, jetbrainsMono.variable, "font-sans", geist.variable)}>
-      <body className="bg-[#0C0C0E] text-[#EDEDEF] antialiased">
+    <html lang="en" className={cn("dark", satoshi.variable, GeistSans.variable, GeistMono.variable)}>
+      <body className="bg-bg-primary text-text-primary antialiased">
         <ClerkProvider>
           {children}
         </ClerkProvider>

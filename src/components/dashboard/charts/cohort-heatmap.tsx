@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -48,10 +48,9 @@ export function CohortHeatmap({ title, data }: CohortHeatmapProps) {
 
             {/* Data rows */}
             {data.map((row, rowIndex) => (
-              <>
+              <Fragment key={row.cohort}>
                 {/* Row header */}
                 <div
-                  key={`label-${row.cohort}`}
                   className="flex items-center py-1.5 pr-3 font-mono text-xs text-text-secondary"
                 >
                   {row.cohort}
@@ -92,7 +91,7 @@ export function CohortHeatmap({ title, data }: CohortHeatmapProps) {
                     </span>
                   </motion.div>
                 ))}
-              </>
+              </Fragment>
             ))}
           </div>
         </div>

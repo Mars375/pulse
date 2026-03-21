@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollReveal, useStaggerReveal } from "@/hooks/use-scroll-animation";
 
 interface Plan {
   name: string;
@@ -57,7 +57,8 @@ const PLANS: Plan[] = [
 
 export function PricingCards() {
   const [annual, setAnnual] = useState(false);
-  const { ref, isVisible } = useScrollAnimation(0.1);
+  const headingRef = useScrollReveal({ y: 30, duration: 0.6 });
+  const cardsRef = useStaggerReveal(0.15);
 
   function getPrice(monthlyPrice: number) {
     if (annual) {
@@ -71,10 +72,10 @@ export function PricingCards() {
   }
 
   return (
-    <section id="pricing" className="py-24" ref={ref}>
+    <section id="pricing" className="py-24">
       <div className="mx-auto max-w-5xl px-6">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div ref={headingRef} className="text-center mb-12">
           <h2 className="font-satoshi text-3xl font-bold text-text-primary sm:text-4xl">
             Simple, transparent pricing
           </h2>
@@ -126,23 +127,21 @@ export function PricingCards() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {PLANS.map((plan, i) => (
+        <div ref={cardsRef} className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {PLANS.map((plan) => (
             <div
               key={plan.name}
               className={cn(
-                "relative rounded-2xl border p-8 transition-all duration-600 ease-out",
+                "relative rounded-2xl border p-8 transition-shadow duration-300",
                 plan.popular
-                  ? "border-accent-primary/30 bg-bg-surface-1 scale-105"
-                  : "border-border-default bg-bg-surface-1",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  ? "border-accent-primary/30 bg-bg-surface-1 md:scale-105"
+                  : "border-border-default bg-bg-surface-1"
               )}
-              style={{
-                transitionDelay: `${i * 150}ms`,
-                ...(plan.popular
+              style={
+                plan.popular
                   ? { boxShadow: "0 0 40px rgba(99,102,241,0.15)" }
-                  : {}),
-              }}
+                  : undefined
+              }
             >
               {plan.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent-primary px-3 py-1 text-xs font-medium text-white">
