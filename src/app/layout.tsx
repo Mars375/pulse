@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("dark", satoshi.variable, GeistSans.variable, GeistMono.variable)}>
       <body className="bg-bg-primary text-text-primary antialiased">
-        <ClerkProvider>
+        <ClerkProvider afterSignInUrl="/overview" afterSignUpUrl="/overview">
           {children}
         </ClerkProvider>
       </body>
