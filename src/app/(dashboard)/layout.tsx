@@ -17,7 +17,7 @@ export default async function DashboardLayout({
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Topbar />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto scroll-smooth p-6">
           <PageTransition>{children}</PageTransition>
         </main>
       </div>

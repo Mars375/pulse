@@ -191,3 +191,27 @@
   --sidebar-border: rgba(42, 42, 46, 0.6);
   --sidebar-ring: #6366F1;
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(42, 42, 46, 0.8);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.4);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(42, 42, 46, 0.8) transparent;
+}

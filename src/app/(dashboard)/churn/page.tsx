@@ -15,6 +15,7 @@ import { HorizontalBarChart } from "@/components/dashboard/charts/horizontal-bar
 import { AtRiskTable } from "@/components/dashboard/at-risk-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+
 interface PageProps {
   searchParams: Promise<{ period?: string }>;
 }
@@ -73,28 +74,10 @@ export default async function ChurnPage({ searchParams }: PageProps) {
       </div>
 
       {/* Cohort Heatmap */}
-      <Card className="bg-bg-surface-1 border">
-        <CardHeader>
-          <CardTitle className="font-satoshi text-base text-text-primary">
-            Cohort Retention
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CohortHeatmap title="" data={cohortData} />
-        </CardContent>
-      </Card>
+      <CohortHeatmap title="Cohort Retention" data={cohortData} />
 
       {/* Churn Reasons */}
-      <Card className="bg-bg-surface-1 border">
-        <CardHeader>
-          <CardTitle className="font-satoshi text-base text-text-primary">
-            Why Customers Leave
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <HorizontalBarChart title="" data={reasons} />
-        </CardContent>
-      </Card>
+      <HorizontalBarChart title="Why Customers Leave" data={reasons} />
 
       {/* At-Risk Customers */}
       <Card className="bg-bg-surface-1 border">
