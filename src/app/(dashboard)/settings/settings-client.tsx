@@ -94,10 +94,29 @@ export function SettingsClient({
             <CardContent>
               <UserProfile
                 appearance={{
+                  variables: {
+                    colorBackground: "#141416",
+                    colorText: "#EDEDEF",
+                    colorTextSecondary: "#7E7E86",
+                    colorInputBackground: "#1C1C1F",
+                    colorInputText: "#EDEDEF",
+                    colorPrimary: "#6366F1",
+                    colorNeutral: "#EDEDEF",
+                    colorShimmer: "#1C1C1F",
+                    borderRadius: "0.5rem",
+                  },
                   elements: {
                     rootBox: "w-full",
                     cardBox: "shadow-none w-full",
                     card: "bg-transparent shadow-none border-0 w-full",
+                    navbar: "hidden",
+                    navbarMobileMenuButton: "hidden",
+                    pageScrollBox: "p-0",
+                    formFieldInput: "bg-bg-surface-2 border-border-default text-text-primary",
+                    formButtonPrimary: "bg-accent-primary hover:bg-accent-primary-hover",
+                    dividerLine: "bg-border-default",
+                    headerTitle: "text-text-primary",
+                    headerSubtitle: "text-text-secondary",
                   },
                 }}
               />

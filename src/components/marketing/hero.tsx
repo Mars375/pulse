@@ -141,12 +141,13 @@ export function Hero() {
         {/* Headline */}
         <h1 className="font-satoshi text-5xl font-bold leading-tight tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
           {WORDS.map((word, i) => (
-            <span key={word} className={cn("inline-block mr-[0.25em] overflow-hidden", word === "numbers." && "text-transparent bg-clip-text")} style={word === "numbers." ? { backgroundImage: "linear-gradient(135deg, #6366F1, #A78BFA)" } : {}}>
+            <span key={word} className="inline-block mr-[0.25em] overflow-hidden">
               <span
-                className="inline-block transition-transform duration-500 ease-out"
+                className={cn("inline-block transition-transform duration-500 ease-out", word === "numbers." && "text-transparent bg-clip-text")}
                 style={{
                   transform: i < revealedCount ? "translateY(0)" : "translateY(110%)",
                   transitionDelay: `${i * 80}ms`,
+                  ...(word === "numbers." ? { backgroundImage: "linear-gradient(135deg, #6366F1, #A78BFA)" } : {}),
                 }}
               >
                 {word}
