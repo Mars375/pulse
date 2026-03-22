@@ -215,3 +215,72 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(42, 42, 46, 0.8) transparent;
 }
+
+/* Clerk UserProfile dark theme overrides */
+.cl-rootBox,
+.cl-cardBox,
+.cl-card,
+.cl-userProfile-root,
+.cl-profileSection,
+.cl-profileSectionContent {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.cl-formFieldInput {
+  background-color: #1C1C1F !important;
+  color: #EDEDEF !important;
+  border-color: rgba(42, 42, 46, 0.6) !important;
+}
+
+.cl-formFieldInput:focus {
+  border-color: #6366F1 !important;
+  outline: none !important;
+}
+
+.cl-formFieldLabel,
+.cl-formFieldHintText,
+.cl-formFieldInfoText {
+  color: #7E7E86 !important;
+}
+
+.cl-headerTitle,
+.cl-profileSectionTitle,
+.cl-profileSectionTitleText,
+.cl-navbarButtonText {
+  color: #EDEDEF !important;
+}
+
+.cl-headerSubtitle,
+.cl-profileSectionSubtitle {
+  color: #7E7E86 !important;
+}
+
+.cl-navbarButton {
+  color: #7E7E86 !important;
+}
+
+.cl-navbarButton:hover,
+.cl-navbarButton[data-active="true"] {
+  background: #1C1C1F !important;
+  color: #EDEDEF !important;
+}
+
+.cl-formButtonPrimary {
+  background-color: #6366F1 !important;
+  color: #EDEDEF !important;
+}
+
+.cl-formButtonPrimary:hover {
+  background-color: #818CF8 !important;
+}
+
+.cl-badge {
+  background: #1C1C1F !important;
+  color: #7E7E86 !important;
+}
+
+.cl-dividerLine {
+  background: rgba(42, 42, 46, 0.6) !important;
+}
