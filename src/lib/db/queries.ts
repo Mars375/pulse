@@ -653,7 +653,7 @@ export async function getAtRiskCustomers(orgId: string) {
     .where(
       and(
         eq(invoices.orgId, orgId),
-        sql`${invoices.status} = 'past_due'`,
+        sql`${invoices.status} = 'failed'`,
         gte(invoices.createdAt, thirtyDaysAgo)
       )
     );
