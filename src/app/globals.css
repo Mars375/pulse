@@ -216,45 +216,114 @@
   scrollbar-color: rgba(42, 42, 46, 0.8) transparent;
 }
 
-/* Clerk UserProfile dark theme overrides */
+/* Clerk UserProfile — full dark theme override */
+/* Blanket: force dark bg + light text on every Clerk surface */
+[data-clerk-component],
+[data-clerk-component] *:not(svg):not(path):not(img) {
+  color: #EDEDEF !important;
+  border-color: rgba(42, 42, 46, 0.6) !important;
+}
+
 .cl-rootBox,
 .cl-cardBox,
 .cl-card,
 .cl-userProfile-root,
 .cl-profileSection,
-.cl-profileSectionContent {
+.cl-profileSectionContent,
+.cl-page,
+.cl-pageScrollBox,
+.cl-profilePage,
+.cl-accordionTriggerButton,
+.cl-accordionContent,
+.cl-menuList,
+.cl-menuItem,
+.cl-userPreview,
+.cl-userButtonPopoverCard,
+.cl-modalContent {
   background: transparent !important;
+  background-color: transparent !important;
   box-shadow: none !important;
-  border: none !important;
 }
 
-.cl-formFieldInput {
+/* Secondary text — labels, hints, descriptions, subtitles */
+.cl-headerSubtitle,
+.cl-profileSectionSubtitle,
+.cl-formFieldLabel,
+.cl-formFieldHintText,
+.cl-formFieldInfoText,
+.cl-formFieldWarningText,
+.cl-formFieldSuccessText,
+.cl-userPreviewSecondaryIdentifier,
+.cl-breadcrumbsItemDivider,
+.cl-footerActionText,
+.cl-fileDropAreaHint,
+.cl-accordionTriggerButton__danger,
+.cl-menuItem__danger {
+  color: #7E7E86 !important;
+}
+
+/* Danger text should stay red-ish */
+.cl-accordionTriggerButton__danger,
+.cl-menuItem__danger,
+.cl-formButtonReset__danger {
+  color: #FB7185 !important;
+}
+
+/* Inputs, selects, textareas */
+.cl-formFieldInput,
+.cl-formFieldInput__firstName,
+.cl-formFieldInput__lastName,
+.cl-formFieldInput__emailAddress,
+.cl-formFieldInput__phoneNumber,
+.cl-formFieldInput__username,
+.cl-formFieldInput__password,
+.cl-formFieldInput__currentPassword,
+.cl-formFieldInput__newPassword,
+.cl-formFieldInput__confirmPassword,
+.cl-formFieldInput__backup_code,
+.cl-phoneInputBox,
+.cl-selectButton,
+.cl-otpCodeFieldInput,
+input[data-clerk-component],
+select[data-clerk-component],
+textarea[data-clerk-component] {
   background-color: #1C1C1F !important;
   color: #EDEDEF !important;
   border-color: rgba(42, 42, 46, 0.6) !important;
 }
 
-.cl-formFieldInput:focus {
+.cl-formFieldInput:focus,
+.cl-otpCodeFieldInput:focus {
   border-color: #6366F1 !important;
   outline: none !important;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
 }
 
-.cl-formFieldLabel,
-.cl-formFieldHintText,
-.cl-formFieldInfoText {
-  color: #7E7E86 !important;
-}
-
-.cl-headerTitle,
-.cl-profileSectionTitle,
-.cl-profileSectionTitleText,
-.cl-navbarButtonText {
+/* Buttons */
+.cl-formButtonPrimary {
+  background-color: #6366F1 !important;
   color: #EDEDEF !important;
 }
 
-.cl-headerSubtitle,
-.cl-profileSectionSubtitle {
-  color: #7E7E86 !important;
+.cl-formButtonPrimary:hover {
+  background-color: #818CF8 !important;
+}
+
+.cl-formButtonReset,
+.cl-footerActionLink,
+.cl-backLink {
+  color: #6366F1 !important;
+}
+
+.cl-formButtonReset:hover,
+.cl-footerActionLink:hover,
+.cl-backLink:hover {
+  color: #818CF8 !important;
+}
+
+/* Nav / sidebar */
+.cl-navbar {
+  background: transparent !important;
 }
 
 .cl-navbarButton {
@@ -267,20 +336,82 @@
   color: #EDEDEF !important;
 }
 
-.cl-formButtonPrimary {
-  background-color: #6366F1 !important;
+/* Badges, tags, pills */
+.cl-badge,
+.cl-tagPillContainer {
+  background: #1C1C1F !important;
   color: #EDEDEF !important;
 }
 
-.cl-formButtonPrimary:hover {
-  background-color: #818CF8 !important;
+/* Verified badge */
+.cl-badge[data-color="primary"] {
+  background: rgba(99, 102, 241, 0.15) !important;
+  color: #818CF8 !important;
 }
 
-.cl-badge {
-  background: #1C1C1F !important;
-  color: #7E7E86 !important;
-}
-
-.cl-dividerLine {
+/* Dividers */
+.cl-dividerLine,
+.cl-dividerRow {
   background: rgba(42, 42, 46, 0.6) !important;
+}
+
+/* Popover / dropdown menus */
+.cl-userButtonPopoverCard,
+.cl-userButtonPopoverFooter,
+.cl-popoverBox,
+.cl-menuList {
+  background-color: #141416 !important;
+  border-color: rgba(42, 42, 46, 0.6) !important;
+}
+
+.cl-menuItem:hover {
+  background-color: #1C1C1F !important;
+}
+
+/* Avatars */
+.cl-avatarBox {
+  border-color: rgba(42, 42, 46, 0.6) !important;
+}
+
+/* File upload area */
+.cl-fileDropAreaBox {
+  background-color: #1C1C1F !important;
+  border-color: rgba(42, 42, 46, 0.6) !important;
+}
+
+/* Accordion / sections expand */
+.cl-accordionTriggerButton {
+  border-color: rgba(42, 42, 46, 0.6) !important;
+}
+
+.cl-accordionTriggerButton:hover {
+  background-color: #1C1C1F !important;
+}
+
+/* Modal backdrop */
+.cl-modalBackdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Alert boxes */
+.cl-alert {
+  background-color: #1C1C1F !important;
+  border-color: rgba(42, 42, 46, 0.6) !important;
+  color: #EDEDEF !important;
+}
+
+.cl-alertText {
+  color: #EDEDEF !important;
+}
+
+/* Table / list items (connected accounts, sessions) */
+.cl-profileSectionItem,
+.cl-profileSectionItemList {
+  border-color: rgba(42, 42, 46, 0.6) !important;
+}
+
+/* Internal page scroll container */
+.cl-scrollBox,
+.cl-pageScrollBox {
+  background: transparent !important;
 }
