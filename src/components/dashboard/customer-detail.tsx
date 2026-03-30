@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
-import { cn, formatCurrency, formatRelativeTime } from "@/lib/utils";
+import { cn, formatCurrency, formatDate, formatRelativeTime } from "@/lib/utils";
 
 interface CustomerDetailProps {
   customerId: string | null;
@@ -103,7 +103,7 @@ export function CustomerDetail({ customerId, onClose }: CustomerDetailProps) {
               <div className="flex justify-between">
                 <span className="text-text-secondary text-sm">Signed up</span>
                 <span className="text-text-primary text-sm">
-                  {new Date(data.signupDate).toLocaleDateString()}
+                  {formatDate(new Date(data.signupDate))}
                 </span>
               </div>
               {data.churnedAt && (
@@ -111,7 +111,7 @@ export function CustomerDetail({ customerId, onClose }: CustomerDetailProps) {
                   <div className="flex justify-between">
                     <span className="text-text-secondary text-sm">Churned</span>
                     <span className="text-negative text-sm">
-                      {new Date(data.churnedAt).toLocaleDateString()}
+                      {formatDate(new Date(data.churnedAt))}
                     </span>
                   </div>
                   {data.churnReason && (
@@ -185,7 +185,7 @@ export function CustomerDetail({ customerId, onClose }: CustomerDetailProps) {
                         {inv.status}
                       </Badge>
                       <span className="text-text-tertiary text-xs">
-                        {new Date(inv.createdAt).toLocaleDateString()}
+                        {formatDate(new Date(inv.createdAt))}
                       </span>
                     </div>
                   </div>

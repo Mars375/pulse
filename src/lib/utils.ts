@@ -58,6 +58,13 @@ export function formatRelativeTime(date: Date): string {
 }
 
 /**
+ * Format a date as a short absolute date: "Jan 15, 2024"
+ */
+export function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+/**
  * Format a number in compact notation: 1234 -> "1.2K", 3400000 -> "3.4M"
  */
 export function formatCompactNumber(n: number): string {

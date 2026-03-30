@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cn, formatCurrency, formatPercent, formatRelativeTime, formatCompactNumber } from "@/lib/utils";
+import { cn, formatCurrency, formatDate, formatPercent, formatRelativeTime, formatCompactNumber } from "@/lib/utils";
 
 // ---------------------------------------------------------------------------
 // cn() — class name merging via clsx + tailwind-merge
@@ -146,5 +146,23 @@ describe("formatCompactNumber()", () => {
 
   it("handles negative millions", () => {
     expect(formatCompactNumber(-1500000)).toBe("-1.5M");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// formatDate()
+// ---------------------------------------------------------------------------
+
+describe("formatDate()", () => {
+  it("formats a date as 'Mon DD, YYYY'", () => {
+    expect(formatDate(new Date("2024-01-15T00:00:00Z"))).toBe("Jan 15, 2024");
+  });
+
+  it("handles single-digit days", () => {
+    expect(formatDate(new Date("2024-03-05T00:00:00Z"))).toBe("Mar 5, 2024");
+  });
+
+  it("formats December correctly", () => {
+    expect(formatDate(new Date("2023-12-31T00:00:00Z"))).toBe("Dec 31, 2023");
   });
 });
