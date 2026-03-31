@@ -8,6 +8,7 @@ import {
   getMrrByPlan,
   getMonthlyMovements,
 } from "@/lib/db/queries";
+import { Download } from "lucide-react";
 import { KpiCard } from "@/components/dashboard/kpi-card";
 import { StackedAreaChart } from "@/components/dashboard/charts/stacked-area-chart";
 import { BarChart } from "@/components/dashboard/charts/bar-chart";
@@ -51,9 +52,19 @@ export default async function RevenuePage({ searchParams }: PageProps) {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="font-satoshi text-3xl font-bold text-text-primary">Revenue</h1>
-        <p className="mt-1 text-text-secondary">Deep dive into your revenue streams.</p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="font-satoshi text-3xl font-bold text-text-primary">Revenue</h1>
+          <p className="mt-1 text-text-secondary">Deep dive into your revenue streams.</p>
+        </div>
+        <a
+          href="/api/export/revenue"
+          download
+          className="inline-flex items-center gap-2 rounded-md border border-border bg-bg-surface-1 px-3 py-2 text-sm font-medium text-text-primary transition-colors hover:bg-bg-surface-2"
+        >
+          <Download className="h-4 w-4" />
+          Export CSV
+        </a>
       </div>
 
       {/* KPIs */}
