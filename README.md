@@ -1,92 +1,76 @@
 # Pulse
 
-> SaaS metrics dashboard — MRR, churn, cohorts, and customer intelligence.
+SaaS analytics for tracking recurring revenue, churn, cohorts, and customer health in one dashboard.
 
-Track revenue, understand churn, and monitor customer health in one place. Built for indie hackers and small SaaS teams who want Baremetrics-level insight without the Baremetrics price tag.
+Pulse is a Next.js app for small SaaS teams that want a clear view of revenue performance and customer behavior. The current repo includes a marketing site, authenticated dashboard flows, seeded demo data, CSV exports, and Stripe + Clerk integrations.
 
 ## Features
 
-- **Revenue** — MRR by plan, monthly movements (new, expansion, contraction, churn), month-over-month comparison
-- **Churn** — Cohort heatmap, churn reasons breakdown, at-risk customer list
-- **Customers** — Filterable table, search, customer detail sheet
-- **Overview** — KPI cards, MRR chart, revenue breakdown, activity feed
-- **Onboarding** — Org creation + auto-seeded demo data so you can explore immediately
-- **Auth** — Clerk (email, OAuth, SSO)
-- **Billing** — Stripe checkout + billing portal
+- Overview dashboard with KPI cards, MRR evolution, revenue breakdown, and recent activity
+- Revenue analytics for recurring revenue trends and movement tracking
+- Churn analysis with cohort views, churn breakdowns, and at-risk customer surfacing
+- Customer management with searchable tables and customer detail views
+- Onboarding flow with organization creation and demo-data seeding
+- CSV exports for customer and revenue data
+- Authentication with Clerk
+- Billing hooks with Stripe checkout and webhooks
+- Component and logic tests with Vitest and Testing Library
 
-## Stack
+## Tech Stack
 
-| Layer | Tech |
-|---|---|
-| Framework | Next.js 16 (App Router, Turbopack) |
-| Database | Neon Postgres + Drizzle ORM |
-| Auth | Clerk |
-| Payments | Stripe |
-| Charts | Recharts |
-| UI | shadcn/ui, Tailwind CSS, Framer Motion |
-| Fonts | Satoshi, Geist Sans, JetBrains Mono |
+- **Framework:** Next.js 16, React 19, TypeScript
+- **Database:** Neon Postgres + Drizzle ORM
+- **Auth:** Clerk
+- **Payments:** Stripe
+- **UI:** Tailwind CSS v4, shadcn/ui, Radix UI
+- **Animation:** Framer Motion, GSAP, Lenis
+- **Charts:** Recharts
+- **Testing:** Vitest, Testing Library, axe-core
 
-## Getting Started
+## Local Setup
 
 ```bash
-git clone https://github.com/your-username/pulse.git
+git clone https://github.com/Mars375/pulse.git
 cd pulse
 npm install
 cp .env.example .env.local
 ```
 
-Fill in `.env.local`:
+Fill in `.env.local` from `.env.example`:
 
 ```env
-# Clerk
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-
-# Neon
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/overview
 DATABASE_URL=
-
-# Stripe
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-
-# Seed
 SEED_API_KEY=
 ```
 
-Push the schema and start dev:
+Prepare the database and start the app:
 
 ```bash
 npx drizzle-kit push
 npm run dev
 ```
 
-Seed demo data:
+## Available Scripts
 
 ```bash
-curl -X POST http://localhost:3000/api/seed \
-  -H "Content-Type: application/json" \
-  -H "x-api-key: YOUR_SEED_API_KEY" \
-  -d '{"orgId": "YOUR_ORG_ID"}'
+npm run dev
+npm run build
+npm run start
+npm run lint
+npm run test
+npm run test:watch
+npm run test:coverage
 ```
 
-## Pages
+## Project Status
 
-| Route | Description |
-|---|---|
-| `/` | Landing page — animated hero, features, pricing |
-| `/pricing` | Dedicated pricing with FAQ and plan comparison |
-| `/onboarding` | Org creation + auto data seeding |
-| `/overview` | KPIs, MRR chart, revenue breakdown, activity feed |
-| `/revenue` | MRR by plan, monthly movements, month comparison |
-| `/customers` | Filterable table, search, customer detail sheet |
-| `/churn` | Cohort heatmap, churn reasons, at-risk customers |
-| `/settings` | Profile, billing, integrations, danger zone |
+**Current status: working product prototype.**
 
-## Deploy
-
-```bash
-vercel
-```
+The repo already contains the main dashboard areas, onboarding, CSV export routes, Stripe webhook plumbing, and a meaningful test suite. It still depends on real third-party credentials and database setup before it can run locally or be deployed.
